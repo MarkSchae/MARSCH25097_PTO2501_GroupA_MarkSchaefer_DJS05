@@ -1,0 +1,79 @@
+Planning for dsj 04
+
+Branches:
+    Search
+    Sort 
+    filter
+    Paginate 
+
+Search:
+    Providing the user the ability to perform specific searches of the podcast data using the title 
+        Thinking of using a linked list here (maybe not, more for frequent add/delete at random places)
+        Search must have auto-complete and start loading from first letter
+        Search must also account for letters from the words other than that of the first word 
+
+Sort:
+    Sort results based on alphabetical
+    Sort based on newest/oldest
+        Create a Map for the order of the entries based on when entered/modified and alphabetical
+        Map = no duplicates, fast lookup
+        
+
+Filter:
+    Genre based filter 
+        I think I can just use the current mapping function that i have for genre name and use the same map to link the filter to the podcast backwards
+
+
+Paginate:
+    Managable chunks of data loaded at a time with numbered pages to navigate
+        Have not done this much
+        Need to research
+
+Centralized state: 
+    Using React state or a state management library 
+        Not sure yet which I will be using 
+            For smaller projects prop drilling is fine 
+            I might want to experiment with a global state manager 
+            I want to start using un/subscribers even if not needed yet 
+
+All searches must be syncronized, work together concurrently, and not break with multiple state changes
+
+Architecture choices:
+    Still deciding for the most part 
+        Readable state/main (global or drilling)
+        Keep the data/behaviour management inside the main App component/state 
+        Styling templates and variations in the passed children of components
+        Subscribers to listen for specific changes to certian elements or library state management (research needed)
+
+Tips:
+    Break down each challenge into smaller chunks/branches for experimentation and learning (solution finding)
+    Using vanilla test pages to understand why the framework was created and what the differences are 
+    Stick to the brief closely and complete the assignment/task(applies to company level too) as quickly
+        as possible then with any extra time create a branch optimizations version for a choice. 
+        Unless you are given free reign with regards to design/architecture.
+    Starting with a html tailwind page, exporting into a template inside a children tag in a component, might be a more natural workflow
+
+How I will start:
+    Write all the search/sort/filter functions as normal helper functions for now 
+    Make sure that they work with the current setup 
+    Decide on a architecture:
+        Golbal state/state library vs prop drilling
+        Which components will pass props vs children
+        Which elements might require changes in future (pass children)
+        Are there any elements that might need variations (behaviour/(modular functions inside the main app ) passed from parent/main component)
+        Using event listeners for style/layout changes and subscribers for data modifications
+        Always build for SPR and ease of additions/deletions/modifications in future iterations/datasets/refactors
+        Somthing to think a little about: Which areas would be better if I need a cross framework (agnostic) solution like Lit
+            I might try both just to see - webcomponents seem to be very important to master in the js environment!
+        Try to think a little into the future and use the correct design/DS based on what would be needed in future
+        Lastly think about where optimizations can be made for performance 
+
+New workflow tips:
+    Start with what you want the browser to display and how (styling) 
+    Move to where the data/display elements will come from and pass/set the data 
+    Decide what behaviours are neccessary to act on the data at what level of DS 
+    Decide which DS are relavent, keep SRP and encapsulation in mind but try to keep behaviour seperate to styling 
+    Decide how the functions will pass and update data where needed 
+    Create the children components responsible for various renders of different types or just different views of the data 
+    Create the parent for the centralized store of the data and the methods that update the store as well as notify the other components of changes relavent to the data they need 
+    
