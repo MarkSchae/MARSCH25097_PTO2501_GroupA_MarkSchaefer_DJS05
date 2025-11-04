@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import fetchData from '../api/fetch-data-api';
 import { apiDataMapping } from '../utils/helper';
 import { genres } from '../utils/genre-data';
+import { Routes, Route } from 'react-router-dom';
+
 /**
  * Displays a grid populated by data fetched from an API
  *  The data is podcasts objects
@@ -178,7 +180,9 @@ function App () { // First letter capital indicates React component
         ))}
       </div>
       </div>
-      <RenderData podcastData={podcastDataToRender} />
+      <Routes>
+        <Route path="/" element={<RenderData podcastData={podcastDataToRender} />} />
+      </Routes>
     </div>
   );
 }

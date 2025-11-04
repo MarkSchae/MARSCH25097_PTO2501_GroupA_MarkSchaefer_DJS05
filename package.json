@@ -1,5 +1,5 @@
 {
-  "name": "podcast-app-djs-04",
+  "name": "podcast-app",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -14,6 +14,7 @@
     "lit": "^3.3.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-router-dom": "^7.9.5",
     "tailwindcss": "^4.1.14"
   },
   "devDependencies": {

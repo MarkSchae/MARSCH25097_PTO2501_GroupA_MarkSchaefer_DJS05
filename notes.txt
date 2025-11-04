@@ -1,33 +1,11 @@
-Planning for dsj 04
+Planning for dsj 05
 
-Branches:
-    Search
-    Sort 
-    filter
-    Paginate 
-
-Search:
-    Providing the user the ability to perform specific searches of the podcast data using the title 
-        Thinking of using a linked list here (maybe not, more for frequent add/delete at random places)
-        Search must have auto-complete and start loading from first letter
-        Search must also account for letters from the words other than that of the first word 
-
-Sort:
-    Sort results based on alphabetical
-    Sort based on newest/oldest
-        Create a Map for the order of the entries based on when entered/modified and alphabetical
-        Map = no duplicates, fast lookup
-        
-
-Filter:
-    Genre based filter 
-        I think I can just use the current mapping function that i have for genre name and use the same map to link the filter to the podcast backwards
-
-
-Paginate:
-    Managable chunks of data loaded at a time with numbered pages to navigate
-        Have not done this much
-        Need to research
+Challenge
+    Create a detailed page view for each podcast 
+    The page must be displayed when the user clicks on a podcast
+    The page for the detailed view must be displayed via routing
+    Users must be able to navigate different seasonal and genre data 
+    Data must be fetched from the provided API 
 
 Centralized state: 
     Using React state or a state management library 
@@ -36,7 +14,6 @@ Centralized state:
             I might want to experiment with a global state manager 
             I want to start using un/subscribers even if not needed yet 
 
-All searches must be syncronized, work together concurrently, and not break with multiple state changes
 
 Architecture choices:
     Still deciding for the most part 
@@ -54,19 +31,12 @@ Tips:
     Starting with a html tailwind page, exporting into a template inside a children tag in a component, might be a more natural workflow
 
 How I will start:
-    Write all the search/sort/filter functions as normal helper functions for now 
-    Make sure that they work with the current setup 
-    Decide on a architecture:
-        Golbal state/state library vs prop drilling
-        Which components will pass props vs children
-        Which elements might require changes in future (pass children)
-        Are there any elements that might need variations (behaviour/(modular functions inside the main app ) passed from parent/main component)
-        Using event listeners for style/layout changes and subscribers for data modifications
-        Always build for SPR and ease of additions/deletions/modifications in future iterations/datasets/refactors
-        Somthing to think a little about: Which areas would be better if I need a cross framework (agnostic) solution like Lit
-            I might try both just to see - webcomponents seem to be very important to master in the js environment!
-        Try to think a little into the future and use the correct design/DS based on what would be needed in future
-        Lastly think about where optimizations can be made for performance 
+    Create a new html file 
+    Create the styling and layout for the page view 
+    Create the logic for routing to this page without a reload onclick
+    Load the page passing data via params
+    Display all the relavent information for the clicked podcast page 
+    Create the appropriate navigation for the users 
 
 New workflow tips:
     Start with what you want the browser to display and how (styling) 
