@@ -113,15 +113,13 @@ function App () { // First letter capital indicates React component
     navigateTo(`/podcast/${podcast.id}`, { state: podcast });
     console.log('navigate is being called');
   }
+  // Function to handle the click to display the detailed view
+
   // Pass the filtered array or the full array to the child render component
   const podcastDataToRender = paginatedPodcasts; // full array if search input is empty
   // Some of the jsx html needs to be here so that the child component does not deal with any behaviour and data
   return (
     <div className="p-4">
-      <button
-      onClick={() => goToDetailedPodcastPage(podcastArray.find(podcast => podcast.id === '10716'))/**Hardcoded test */}
-      className='px-3 py-1 border rounded'>
-      </button>
       <select
         value={selectedGenre}
         onChange={event => { setSelectedGenre(event.target.value); setCurrentPage(1); }} // reset page on filter change
@@ -192,7 +190,7 @@ function App () { // First letter capital indicates React component
       </div>
       </div>
       <Routes>
-        <Route path="/" element={<RenderData podcastData={podcastDataToRender} />} />
+        <Route path="/" element={<RenderData podcastData={podcastDataToRender} navigateFn={goToDetailedPodcastPage} />} />
         <Route path="/podcast/:podcastId" element={<RenderDetailsPage />} /> 
           {/** I think render the seasons logic as a nested route using outlet component */}
       </Routes>
@@ -203,12 +201,13 @@ function App () { // First letter capital indicates React component
 export default App
 // Props passed in as a object argument here and deconstructed in the {} so as to use .map on the array
 // New component that reders the styling template using the props passed by the App parent component
-function RenderData ({ podcastData }) {
+function RenderData ({ podcastData, navigateFn }) {
   return (
     <div className='flex flex-col gap-4 bg-gray-200 p-4'>
       <div className='flex flex-col gap-5 sm:grid sm:grid-cols-2 xl:grid-cols-4'>
       {podcastData.map(podcast => (
-        <div className='flex flex-col gap-4 p-3.5 bg-white rounded h-full' key={podcast.id}>
+        <div className='flex flex-col gap-4 p-3.5 bg-white rounded h-full' key={podcast.id}
+        onClick={() => navigateFn(podcast)}>
           <img src={podcast.image} alt={podcast.title} />
           <div className='flex-1'> {podcast.title} </div>
           <div> Seasons: {podcast.seasons} </div>
