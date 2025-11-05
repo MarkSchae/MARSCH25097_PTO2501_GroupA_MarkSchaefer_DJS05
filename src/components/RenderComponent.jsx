@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import fetchData from '../api/fetch-data-api';
-import { apiDataMapping } from '../utils/helper';
-import { genres } from '../utils/genre-data';
-import { Routes, Route } from 'react-router-dom';
+import fetchData from '../api/fetch-data-api.jsx';
+import { apiDataMapping } from '../utils/helper.js';
+import { genres } from '../utils/genre-data.js';
+import { Routes, Route, useNavigate } from 'react-router-dom';
+import RenderDetailsPage from './PodcastDetailPage.jsx';
 
 /**
  * Displays a grid populated by data fetched from an API
@@ -21,7 +22,7 @@ function App () { // First letter capital indicates React component
   // Set the state
   // Initialize a empy array which contains the initial data and the function/behaviour for the state/hook
   // Destructure array
-  const [podcoastArray, setPodcastData] = React.useState([]);
+  const [podcastArray, setPodcastData] = React.useState([]);
   // Search state
   const [userSearchInput, setSearch] = React.useState('');
   // Sort state
@@ -30,18 +31,19 @@ function App () { // First letter capital indicates React component
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10; // Global for use in multiple functions
   // Genre filter
-   const [selectedGenre, setSelectedGenre] = useState('all'); // For genre filter input
+  const [selectedGenre, setSelectedGenre] = useState('all'); // For genre filter input
   // Use state for loading wiget, starts as true and is set to false when the promise is resolved (.finally)
   const [loading, setLoading] = React.useState(true);
   // Use state for api error handling within the component 
   const [error, setError] = React.useState(null);
-
+  // Navigate to path state
+  const navigateTo = useNavigate();
   // Filter the podcasts data by title where the title.includes(userinput)
   const filteredBySearch = userSearchInput
-    ? podcoastArray.filter(podcast =>
+    ? podcastArray.filter(podcast =>
         podcast.title.toLowerCase().includes(userSearchInput.toLowerCase())
       )
-    : podcoastArray;
+    : podcastArray;
 
   // Filter by genre
   const filteredByGenre = selectedGenre === 'all' ? filteredBySearch
@@ -96,8 +98,8 @@ function App () { // First letter capital indicates React component
    */
   React.useEffect(() => {
     fetchData().then(data => {
-      const podcoastArray = apiDataMapping(data, genres);
-      setPodcastData(podcoastArray)
+      const podcastArray = apiDataMapping(data, genres);
+      setPodcastData(podcastArray)
     }).catch(errorMessage => setError(errorMessage.message)).finally(() => setLoading(false));
   },[]);// Run again on polling of 2min or somthing, should use a data variable to trigger this actually
   // resetApiCall, needs work (no callback)
@@ -106,11 +108,20 @@ function App () { // First letter capital indicates React component
   if (loading) return  <div className="w-10 h-10 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin mx-auto my-4"></div>;
   if (error) return <div>Error: {error}</div>;
 
+  // Navigate to detailed page onclick
+  function goToDetailedPodcastPage (podcast) {
+    navigateTo(`/podcast/${podcast.id}`, { state: podcast });
+    console.log('navigate is being called');
+  }
   // Pass the filtered array or the full array to the child render component
   const podcastDataToRender = paginatedPodcasts; // full array if search input is empty
   // Some of the jsx html needs to be here so that the child component does not deal with any behaviour and data
   return (
     <div className="p-4">
+      <button
+      onClick={() => goToDetailedPodcastPage(podcastArray.find(podcast => podcast.id === '10716'))/**Hardcoded test */}
+      className='px-3 py-1 border rounded'>
+      </button>
       <select
         value={selectedGenre}
         onChange={event => { setSelectedGenre(event.target.value); setCurrentPage(1); }} // reset page on filter change
@@ -182,6 +193,8 @@ function App () { // First letter capital indicates React component
       </div>
       <Routes>
         <Route path="/" element={<RenderData podcastData={podcastDataToRender} />} />
+        <Route path="/podcast/:podcastId" element={<RenderDetailsPage />} /> 
+          {/** I think render the seasons logic as a nested route using outlet component */}
       </Routes>
     </div>
   );
