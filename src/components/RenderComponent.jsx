@@ -111,8 +111,13 @@ function App () { // First letter capital indicates React component
   // Navigate to detailed page onclick
   function goToDetailedPodcastPage (podcast) {
     navigateTo(`/podcast/${podcast.id}`, { state: podcast });
-    console.log('navigate is being called');
   }
+
+  // Function to navigate back to the home page
+  function homePage () {
+    navigateTo('/');
+  }
+  // Also need to add logic to return to default search
   // Function to handle the click to display the detailed view
 
   // Pass the filtered array or the full array to the child render component
@@ -120,6 +125,11 @@ function App () { // First letter capital indicates React component
   // Some of the jsx html needs to be here so that the child component does not deal with any behaviour and data
   return (
     <div className="p-4">
+      <button
+        className='px-4 py-2 bg-blue-500 text-white rounded transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg'
+        onClick={() => homePage()}>
+        Home 
+      </button>
       <select
         value={selectedGenre}
         onChange={event => { setSelectedGenre(event.target.value); setCurrentPage(1); }} // reset page on filter change
@@ -206,8 +216,9 @@ function RenderData ({ podcastData, navigateFn }) {
     <div className='flex flex-col gap-4 bg-gray-200 p-4'>
       <div className='flex flex-col gap-5 sm:grid sm:grid-cols-2 xl:grid-cols-4'>
       {podcastData.map(podcast => (
-        <div className='flex flex-col gap-4 p-3.5 bg-white rounded h-full' key={podcast.id}
-        onClick={() => navigateFn(podcast)}>
+        <div className='flex flex-col gap-4 p-3.5 bg-white rounded-2xl h-full transition-transform duration-200 hover:-translate-y-1 hover:cursor-pointer hover:shadow-2xl shadow-gray-500'
+          key={podcast.id}
+          onClick={() => navigateFn(podcast)}>
           <img src={podcast.image} alt={podcast.title} />
           <div className='flex-1'> {podcast.title} </div>
           <div> Seasons: {podcast.seasons} </div>
