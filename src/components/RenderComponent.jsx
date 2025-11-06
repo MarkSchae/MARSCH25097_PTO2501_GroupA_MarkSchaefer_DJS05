@@ -39,6 +39,7 @@ function App () { // First letter capital indicates React component
   // Navigate to path state
   const navigateTo = useNavigate();
   // Filter the podcasts data by title where the title.includes(userinput)
+  // If a input exists inside userSearchInput return the filtered array, if ''(falsy) return the original array
   const filteredBySearch = userSearchInput
     ? podcastArray.filter(podcast =>
         podcast.title.toLowerCase().includes(userSearchInput.toLowerCase())
@@ -46,8 +47,8 @@ function App () { // First letter capital indicates React component
     : podcastArray;
 
   // Filter by genre
-  const filteredByGenre = selectedGenre === 'all' ? filteredBySearch
-  : filteredBySearch.filter(podcast => podcast.genreNames.some(genreName => genreName === selectedGenre));
+  const filteredByGenre = selectedGenre === 'all' ? filteredBySearch // Return filter by search of full array if no specific genre is selected
+  : filteredBySearch.filter(podcast => podcast.genreNames.some(genreName => genreName === selectedGenre)); // Return podcasts filtered by search and genre if both inputs exist
   // Sort function
   const sortedPodcasts = userSearchInput ? [...filteredByGenre].sort((podcastA, podcastB) => { // Compares and return 1, -1, 0 to order items
     switch (sortType) {
@@ -113,11 +114,18 @@ function App () { // First letter capital indicates React component
     navigateTo(`/podcast/${podcast.id}`, { state: podcast });
   }
 
-  // Function to navigate back to the home page
+  // Function to navigate back to the home page, Keeps previous state (no trigger of re-render)
   function homePage () {
     navigateTo('/');
   }
   // Also need to add logic to return to default search
+  // Function to reset search parameters
+  function resetSearch () {
+    setSearch('');
+    setSelectedGenre('all');
+    setSortType('title');
+    setCurrentPage(1);
+  }
   // Function to handle the click to display the detailed view
 
   // Pass the filtered array or the full array to the child render component
@@ -129,6 +137,11 @@ function App () { // First letter capital indicates React component
         className='px-4 py-2 bg-blue-500 text-white rounded transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg'
         onClick={() => homePage()}>
         Home 
+      </button>
+      <button
+        className='px-4 py-2 bg-blue-500 text-white rounded transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg'
+        onClick={() => resetSearch()}>
+        Default 
       </button>
       <select
         value={selectedGenre}
