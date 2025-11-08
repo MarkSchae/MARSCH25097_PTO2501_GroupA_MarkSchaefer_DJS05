@@ -12,6 +12,7 @@
 export function apiDataMapping (podcastData, genres) {
     // new Map takes the returned array from the genre.map and maps the properties to a key value map making the look up for genre title by id faster
     const genreMap = new Map(genres.map(genre => [genre.id, genre.title]));
+    // New map for seasons data. Season id and podcast id act as foreign key
     const newPodcastArray = podcastData.map(podcast => {
         // Access to the names associated with the genre array inside each podcast object
         //const podcastGenreArray = podcast.genres;

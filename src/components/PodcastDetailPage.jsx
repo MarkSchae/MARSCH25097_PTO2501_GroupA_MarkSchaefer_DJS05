@@ -26,16 +26,50 @@ export default function RenderDetailsPage () {// Maybe pass the template as a ch
     if (loading) return  <div className="w-10 h-10 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin mx-auto my-4"></div>;
     if (error) return <div>Error: {error}</div>;
     // Use passed object if available, otherwise fetch
-    console.log(state);
-    console.log(podcast);
     const clickedPodcast = state || podcast; // Use the state object as the current clicked on podcast or fetch the podcast using params in the URL (persistant through page reload)
   
     return (
         <div className='flex flex-col gap-4 bg-gray-200 p-4'>
-            <h1>
-                {console.log(clickedPodcast)}
-                {clickedPodcast.title}
-            </h1>
+            <div className="flex flex-col gap-5 sm:grid sm:grid-cols-1 xl:grid-cols-[1fr_3fr] border-2 border-black shadow-2xl rounded-2xl">
+                <div className='flex flex-col gap-4 p-5 bg-white rounded-2xl h-full transition-transform duration-200 hover:-translate-y-1 hover:cursor-pointer hover:shadow-2xl shadow-gray-500'
+                    key={clickedPodcast.id}>
+                    <img src={clickedPodcast.image} alt={clickedPodcast.title} />
+
+                </div> 
+                <div className="flex flex-col gap-4">
+                    <div className="text-2xl"> {podcast.title} </div>
+                    <div>{clickedPodcast.description}</div>
+                    <div className="flex flex-col sm:flex-row gap-5">
+                        <div className='flex flex-col gap-1.5 w-[50%]'>
+                            <div className="text-2xl">Genres</div>
+                            <div className="flex flex-row gap-10">
+                                {clickedPodcast.genreNames.map(genreName => (<div key={genreName} className='bg-gray-300 rounded shadow shadow-black p-1'>{genreName}</div>))}
+                            </div>
+                        </div>
+                        <div className="flex flex-col gap-1.5">
+                            <div className="text-2xl">Last Updated</div>
+                            <div> {clickedPodcast.updatedReadable} </div>
+                        </div> 
+                    </div>
+                    <div className="flex flex-col sm:flex-row gap-5">
+                        <div className="flex flex-col gap-1.5 w-[50%]">
+                            <div className="text-2xl">Total Seasons</div>
+                            <div>{clickedPodcast.seasons} </div>
+                        </div>
+                        <div className="flex flex-col gap-1.5">
+                            <div className="text-2xl">Total Episodes</div>
+                            <div>{clickedPodcast.seasons} </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="flex flex-row justify-between">
+                <h1>Current Seasons</h1>
+                <select value={seasons.currentSeason}>
+                    <option value="">None Selected</option>
+                    {seasons.map(season => <option key={season.id} value={season.title}>{season.title}</option>)}
+                </select>
+            </div>
         </div>
     );
 }
