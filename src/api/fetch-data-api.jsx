@@ -5,11 +5,12 @@
  * @returns {Promise<Object[]>} - Async function that resolves to return a array of data objects
  * @throws {Error} - Error message and fallback behaviour incase of network etc error
  */
-export default async function fetchData() { // Remember that extra security checks can also be made for api's even on the frontend
+export default async function fetchData(dynamicApiRoute) { // Remember that extra security checks can also be made for api's even on the frontend
+    const routeInfo = dynamicApiRoute ? `id/${dynamicApiRoute}` : '';
     // Try catch for the error handling
     try {
         // Fetch data from the api
-        const response = await fetch('https://podcast-api.netlify.app/'); // Can pass url and make this function dynamic
+        const response = await fetch(`https://podcast-api.netlify.app/${routeInfo}`); // Can pass url and make this function dynamic
         // Error
         if(!response.ok) {
             throw new Error(`There was an error ${response.status}`);

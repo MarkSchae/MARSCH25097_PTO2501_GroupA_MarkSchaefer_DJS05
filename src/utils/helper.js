@@ -27,6 +27,11 @@ export function apiDataMapping (podcastData, genres) {
     });
     return newPodcastArray;
 }
+
+export function genreMapping (podcastId) {
+    const genreMap = new Map(genres.map(genre => [genre.id, genre.title])); 
+} 
+
 /**
  * 
  * @param {*} lastedUpdatedDate 

@@ -9,14 +9,16 @@ export default function RenderDetailsPage () {// Maybe pass the template as a ch
     const { state } = useLocation(); // Stores the current URL path as well as any objects sent via navigate (object)
     const { podcastId } = useParams(); // Returns the value in the URL @ path/:podcastId as an object
     const [podcast, setPodcast] = useState({});
+    //const [setPodcastSeasonsData, setPodcastSeasons] = useState([]);
     // Use state for loading wiget, starts as true and is set to false when the promise is resolved (.finally)
     const [loading, setLoading] = useState(true);
     // Use state for api error handling within the component 
     const [error, setError] = useState(null);
     // Logic to fetch the podcast for a direct URL access full page reload
+    // Requirement was to have this async, React does not allow, define async then call at the end
     useEffect(() => {
-        fetchData().then(data => {
-            const podcastFromParams = data.find(data => data.id === podcastId);
+        fetchData(podcastId).then(data => {
+            const podcastFromParams = data;
             setPodcast(podcastFromParams);
         }).catch(errorMessage => setError(errorMessage.message)).finally(() => setLoading(false));
     },[podcastId]);
@@ -34,10 +36,9 @@ export default function RenderDetailsPage () {// Maybe pass the template as a ch
                 <div className='flex flex-col gap-4 p-5 bg-white rounded-2xl h-full transition-transform duration-200 hover:-translate-y-1 hover:cursor-pointer hover:shadow-2xl shadow-gray-500'
                     key={clickedPodcast.id}>
                     <img src={clickedPodcast.image} alt={clickedPodcast.title} />
-
                 </div> 
                 <div className="flex flex-col gap-4">
-                    <div className="text-2xl"> {podcast.title} </div>
+                    <div className="text-2xl"> {clickedPodcast.title} </div>
                     <div>{clickedPodcast.description}</div>
                     <div className="flex flex-col sm:flex-row gap-5">
                         <div className='flex flex-col gap-1.5 w-[50%]'>
@@ -54,20 +55,23 @@ export default function RenderDetailsPage () {// Maybe pass the template as a ch
                     <div className="flex flex-col sm:flex-row gap-5">
                         <div className="flex flex-col gap-1.5 w-[50%]">
                             <div className="text-2xl">Total Seasons</div>
-                            <div>{clickedPodcast.seasons} </div>
+                            <div>{clickedPodcast.seasons.length} </div>
                         </div>
                         <div className="flex flex-col gap-1.5">
                             <div className="text-2xl">Total Episodes</div>
-                            <div>{clickedPodcast.seasons} </div>
+                            <div>{clickedPodcast.seasons.reduce((totalEpisodes, season) => {
+                                return totalEpisodes + season.episodes.length
+                            }, 0)} 
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div className="flex flex-row justify-between">
                 <h1>Current Seasons</h1>
-                <select value={seasons.currentSeason}>
+                <select value={clickedPodcast.seasons.season}>
                     <option value="">None Selected</option>
-                    {seasons.map(season => <option key={season.id} value={season.title}>{season.title}</option>)}
+                    {clickedPodcast.seasons.map(season => <option key={season.id} value={season.title}>{season.title}</option>)}
                 </select>
             </div>
         </div>
