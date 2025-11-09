@@ -137,21 +137,24 @@ function App () { // First letter capital indicates React component
   const podcastDataToRender = paginatedPodcasts; // full array if search input is empty
   // Some of the jsx html needs to be here so that the child component does not deal with any behaviour and data
   return (
-    <div className="p-4">
-      <button
-        className='px-4 py-2 bg-blue-500 text-white rounded transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg'
-        onClick={() => homePage()}>
-        Home 
-      </button>
-      <button
-        className='px-4 py-2 bg-blue-500 text-white rounded transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg'
-        onClick={() => resetSearch()}>
-        Default 
-      </button>
+    <div className="p-4 flex flex-col gap-2.5 items-center">
+      <div className='flex flex-col sm:flex-row gap-2.5'>
+        <button
+          className='px-4 py-2 bg-gray-400 text-white rounded transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg'
+          onClick={() => homePage()}>
+          Home 
+        </button>
+        <button
+          className='px-4 py-2 bg-gray-400 text-white rounded transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg'
+          onClick={() => resetSearch()}>
+          Default 
+        </button>
+      </div>
+
       <select
         value={selectedGenre}
         onChange={event => { setSelectedGenre(event.target.value); setCurrentPage(1); }} // reset page on filter change
-        className='border p-2 rounded mb-4'
+        className='border p-2 rounded'
       >
         <option value='all'>All Genres</option>
         {genres.map(genre => <option key={genre.id} value={genre.title}>{genre.title}</option>)}
@@ -161,61 +164,62 @@ function App () { // First letter capital indicates React component
         value={userSearchInput} // Inputs the search input as the value
         onChange={event => setSearch(event.target.value)} // When the input field changes run the setSearch with the new value/input
         placeholder='Search'
-        className='border p-2 rounded w-full mb-4'
+        className='border p-2 rounded w-full'
       />
-      <div className='flex gap-4 mb-4'>
-        <label>
-          A→Z
-          <input
-            type='radio'
-            name='sort'
-            value='title-asc'// Value is the string used in the set state
-            checked={sortType === 'title-asc'}// Tells React that the state is the UI render too 
-            onChange={event => setSortType(event.target.value)}
-          />
-        </label>
-        <label>
-          Title Z→A
-          <input
-            type='radio'
-            name='sort'
-            value='title-desc'
-            checked={sortType === 'title-desc'}
-            onChange={event => setSortType(event.target.value)}
-          />
-        </label>
-        <label>
-          Newest
-          <input
-            type='radio'
-            name='sort'
-            value='updated-newest'
-            checked={sortType === 'updated-newest'}
-            onChange={event => setSortType(event.target.value)}
-          /> 
-        </label>
-        <label>
-          Oldest
-          <input
-            type='radio'
-            name='sort'
-            value='updated-oldest'
-            checked={sortType === 'updated-oldest'}
-            onChange={event => setSortType(event.target.value)}
-          /> 
-        </label>
-
-      <div className='flex gap-2 mt-4'>
-        {Array.from({ length: totalPages }, (element, i) => i + 1).map(page => (// Array for page numbers display
-          <button
-            key={page}
-            onClick={() => setCurrentPage(page)}
-            className={`px-3 py-1 border rounded ${page === currentPage ? 'bg-blue-500 text-white' : ''}`}
-          >
-            {page}
-          </button>
-        ))}
-      </div>
+      <div className='flex flex-col gap-4'>
+        <div className='flex flex-row gap-2.5'>
+          <label>
+            A→Z
+            <input
+              type='radio'
+              name='sort'
+              value='title-asc'// Value is the string used in the set state
+              checked={sortType === 'title-asc'}// Tells React that the state is the UI render too 
+              onChange={event => setSortType(event.target.value)}
+            />
+          </label>
+          <label>
+            Title Z→A
+            <input
+              type='radio'
+              name='sort'
+              value='title-desc'
+              checked={sortType === 'title-desc'}
+              onChange={event => setSortType(event.target.value)}
+            />
+          </label>
+          <label>
+            Newest
+            <input
+              type='radio'
+              name='sort'
+              value='updated-newest'
+              checked={sortType === 'updated-newest'}
+              onChange={event => setSortType(event.target.value)}
+            /> 
+          </label>
+          <label>
+            Oldest
+            <input
+              type='radio'
+              name='sort'
+              value='updated-oldest'
+              checked={sortType === 'updated-oldest'}
+              onChange={event => setSortType(event.target.value)}
+            /> 
+          </label>
+        </div>
+        <div className='flex gap-2'>
+          {Array.from({ length: totalPages }, (element, i) => i + 1).map(page => (// Array for page numbers display
+            <button
+              key={page}
+              onClick={() => setCurrentPage(page)}
+              className={`px-3 py-1 border rounded ${page === currentPage ? 'bg-blue-500 text-white' : ''}`}
+            >
+              {page}
+            </button>
+          ))}
+        </div>
       </div>
       <Routes>
         <Route path="/" element={<RenderData podcastData={podcastDataToRender} navigateFn={goToDetailedPodcastPage} />} />

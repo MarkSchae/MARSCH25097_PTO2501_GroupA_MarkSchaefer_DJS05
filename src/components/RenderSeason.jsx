@@ -1,5 +1,5 @@
 export default function RenderSeason ({ season }) {
-
+    // If we need this to persist on reload, set useParams
     return (
         <div className="flex flex-col gap-2.5 bg-white border-2 border-gray-400 p-4">
             <div className="flex flex-col sm:grid sm:grid-cols-[auto_1fr] gap-5">
@@ -24,9 +24,7 @@ export default function RenderSeason ({ season }) {
                     </div>
                 </div>
             </div>
-            
             )}
-            
         </div>
     );
 }
