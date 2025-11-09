@@ -4,6 +4,7 @@ import { apiDataMapping } from '../utils/helper.js';
 import { genres } from '../utils/genre-data.js';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import RenderDetailsPage from './PodcastDetailPage.jsx';
+import RenderSeason from './RenderSeason.jsx';
 
 /**
  * Displays a grid populated by data fetched from an API
@@ -113,6 +114,10 @@ function App () { // First letter capital indicates React component
   function goToDetailedPodcastPage (podcast) {
     navigateTo(`/podcast/${podcast.id}`, { state: podcast });
   }
+
+/*   function seasonsLoad (podcast, season) {
+    navigateTo(`/podcast/${podcast.id}/season`, { state: season })
+  } */
 
   // Function to navigate back to the home page, Keeps previous state (no trigger of re-render)
   function homePage () {

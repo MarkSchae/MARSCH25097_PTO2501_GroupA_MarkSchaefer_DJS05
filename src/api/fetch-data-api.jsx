@@ -7,6 +7,7 @@
  */
 export default async function fetchData(dynamicApiRoute) { // Remember that extra security checks can also be made for api's even on the frontend
     const routeInfo = dynamicApiRoute ? `id/${dynamicApiRoute}` : '';
+    //const genreRoute = dynamicApiRoute ? `id/${dynamicApiRoute}` : '';
     // Try catch for the error handling
     try {
         // Fetch data from the api
