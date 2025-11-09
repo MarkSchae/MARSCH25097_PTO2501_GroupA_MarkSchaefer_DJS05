@@ -55,19 +55,25 @@ Utility classes for hover states, shadows, borders, and flex/grid layouts.
 
 - RenderComponent.jsx — Parent component handles fetching, error/loading states, data mapping, and passes data as props.
 
-- RenderComponent.jsx — Child component responsible displaying podcast cards.
+- RenderDetailedPage.jsx — Child component responsible displaying shows data.
+
+- RenderSeasons.jsx — Child component responsible displaying seasons data.
 
 - Helper Modules — Contain logic for date formatting, API mapping, and utility functions.
 
-## Design & Workflow Decisions
+## Design & Workflow
 
-- React Hooks for Lifecycle Management
+- React Hooks for Lifecycle Management (useState, useEffect)
 
-- useState stores podcast, loading, and error states.
+- Functional Data Transformation separates logic from UI rendering
 
-- useEffect manages data fetching.
+- Centralized Error & Loading Handling in the parent App component
 
-- Functional Data Transformation
+- Reusable Component Design ensures each podcast card is dynamic and easily maintainable
+
+- Navigation & Routing uses react-router-dom with dynamic routes (/podcast/:podcastId)
+
+- State Persistence through useState and navigate state object
 
 ## All non-UI logic (data formatting, genre lookups, timestamps) is handled in utility modules.
 
@@ -78,23 +84,6 @@ Utility classes for hover states, shadows, borders, and flex/grid layouts.
 ## Reusable Component Design
 
 - Each card uses props to render dynamic podcast data.
-
-🧰 File Structure
-project-root/
-│
-├─ src/
-│  ├─ api/
-│  │   └─ fetch-data-api.js       # Handles async API fetch with error handling
-│  ├─ components/
-│  │   └─ RenderComponent.jsx     # Renders the podcast grid
-│  ├─ utils/
-│  │   ├─ helper.js               # Data mapping, date formatting, and utility functions
-│  │   └─ genre-data.js           # Static genre list
-│  ├─ App.jsx                     # Main parent component managing state
-│  ├─ main.jsx                    # Entry point, mounts React app
-│  └─ index.css                   # Tailwind base styles
-│
-└─ package.json
 
 ## How to Run the Project
 
@@ -129,4 +118,10 @@ Visit the local development URL (usually http://localhost:5173).
 - Add user preferences (theme toggle, sorting options).
 
 - Auto-refreshes (polling) every 2 minutes using setInterval within useEffect.
+
+- Make use of third party state management
+
+- Lazy loading and mem caching to optimize searches and renders
+
+- Optimize for the least amount of re-renders needed
 

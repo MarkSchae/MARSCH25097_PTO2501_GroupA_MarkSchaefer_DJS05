@@ -147,7 +147,7 @@ function App () { // First letter capital indicates React component
         <button
           className='px-4 py-2 bg-gray-400 text-white rounded transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg'
           onClick={() => resetSearch()}>
-          Default 
+          Reset filters
         </button>
       </div>
 

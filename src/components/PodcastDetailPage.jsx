@@ -7,6 +7,16 @@ import { lastUpdated } from "../utils/helper";
 import RenderSeason from "./RenderSeason";
 // Props passed in as a object argument here and deconstructed in the {} so as to use .map on the array
 // New component that reders the styling template using the props passed by the App parent component
+/**
+ * Displays detailed information for a selected podcast, including its seasons and episodes.
+ * Fetches podcast data for both route navigation and if accessed directly via URL and handles loading and error states.
+ * @component
+ * * The component uses React Router hooks:
+ * @param {object} location - Provided by useLocation().
+ * @param {object} params - Provided by useParams(), contains the podcastId from the URL for fetching data on direct access.
+ * @returns {JSX.Element} Podcast detail page with season and episode information.
+ */
+
 export default function RenderDetailsPage () {// Maybe pass the template as a children object
     const { state } = useLocation(); // Stores the current URL path as well as any objects sent via navigate (object)
     const { podcastId } = useParams(); // Returns the value in the URL @ path/:podcastId as an object
