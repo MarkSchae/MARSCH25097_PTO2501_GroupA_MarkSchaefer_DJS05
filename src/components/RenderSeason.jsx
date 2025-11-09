@@ -37,7 +37,7 @@ export default function RenderSeason ({ season }) {
                     <img className="w-20 h-20 rounded-2xl bg-gray-300 border-2 border-gray-600" src={season.image} alt={episode.title} />
                     <div className="flex flex-col gap-5">
                         <div>Episode:{episode.episode} {episode.title}</div>
-                        <div>{episode.description}</div>
+                        <div className="line-clamp-1">{episode.description}</div>
                     </div>
                 </div>
             </div>

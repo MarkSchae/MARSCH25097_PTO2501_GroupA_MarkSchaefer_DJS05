@@ -50,7 +50,7 @@ export default function RenderDetailsPage () {// Maybe pass the template as a ch
                     key={podcast.id}>
                     <img src={podcast.image} alt={podcast.title} />
                 </div> 
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-4 p-2.5">
                     <div className="text-2xl"> {podcast.title} </div>
                     <div>{podcast.description}</div>
                     <div className="flex flex-col sm:flex-row gap-5">
